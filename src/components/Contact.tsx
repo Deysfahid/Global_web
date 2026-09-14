@@ -70,12 +70,40 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0;
   }
 
-  function handleSubmit(e: FormEvent) {
+  const [submitting, setSubmitting] = useState(false);
+
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!validate()) return;
-    console.info("[GLOBAL Contact Form] Submission:", formData);
-    setStatus("success");
-    setFormData(initialFormData);
+    setSubmitting(true);
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: "fc168a9d-ffbe-4db1-8c10-9cac12af5037",
+          subject: `New enquiry from ${formData.name} — GLOBAL`,
+          from_name: "GLOBAL Website",
+          name: formData.name,
+          email: formData.email,
+          business_name: formData.businessName,
+          phone: formData.phone,
+          business_type: formData.businessType,
+          project_type: formData.service,
+          message: formData.message,
+        }),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setFormData(initialFormData);
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   function handleChange(field: keyof FormData, value: string) {
@@ -329,10 +357,11 @@ export default function Contact() {
                 <div className="pt-8">
                   <button
                     type="submit"
-                    className="group inline-flex items-center gap-2 px-8 py-4 text-[13px] font-medium text-black bg-white rounded-full hover:bg-white/90 transition-all"
+                    disabled={submitting}
+                    className="group inline-flex items-center gap-2 px-8 py-4 text-[13px] font-medium text-black bg-white rounded-full hover:bg-white/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    SEND ENQUIRY
-                    <ArrowUpRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    {submitting ? "SENDING..." : "SEND ENQUIRY"}
+                    {!submitting && <ArrowUpRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />}
                   </button>
                 </div>
               </form>
