@@ -1,0 +1,345 @@
+"use client";
+
+import { useState, type FormEvent } from "react";
+import { ArrowUpRight, CheckCircle2, AlertCircle } from "lucide-react";
+import { siteConfig } from "@/data/config";
+import { getWhatsAppUrl } from "@/lib/utils";
+import ScrollReveal from "./ScrollReveal";
+
+const businessTypeOptions = [
+  "Retail",
+  "Restaurant",
+  "Medical",
+  "Salon",
+  "Fitness",
+  "Real Estate",
+  "Education",
+  "Professional Services",
+  "Other",
+];
+
+const serviceOptions = [
+  "New Website",
+  "Website Redesign",
+  "E-commerce Website",
+  "Landing Page",
+  "Custom Web Application",
+  "Website Maintenance",
+  "Other",
+];
+
+interface FormData {
+  name: string;
+  businessName: string;
+  email: string;
+  phone: string;
+  businessType: string;
+  service: string;
+  message: string;
+}
+
+const initialFormData: FormData = {
+  name: "",
+  businessName: "",
+  email: "",
+  phone: "",
+  businessType: "",
+  service: "",
+  message: "",
+};
+
+export default function Contact() {
+  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+
+  const { contact } = siteConfig;
+  const whatsappUrl = getWhatsAppUrl();
+
+  function validate(): boolean {
+    const newErrors: Partial<Record<keyof FormData, string>> = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required.";
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Enter a valid email address.";
+    }
+    if (!formData.businessType) newErrors.businessType = "Select a business type.";
+    if (!formData.service) newErrors.service = "Select what you need.";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    if (!validate()) return;
+    console.info("[GLOBAL Contact Form] Submission:", formData);
+    setStatus("success");
+    setFormData(initialFormData);
+  }
+
+  function handleChange(field: keyof FormData, value: string) {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[field];
+        return next;
+      });
+    }
+  }
+
+  const inputClass = (hasError?: string) =>
+    `w-full px-0 py-3 text-sm bg-transparent border-b transition-colors outline-none placeholder:text-white/15 text-white ${
+      hasError
+        ? "border-red-500/50 focus:border-red-400"
+        : "border-white/[0.08] focus:border-white/30"
+    }`;
+
+  const selectClass = (hasError?: string) =>
+    `w-full px-0 py-3 text-sm bg-transparent border-b transition-colors outline-none text-white appearance-none cursor-pointer ${
+      hasError
+        ? "border-red-500/50 focus:border-red-400"
+        : "border-white/[0.08] focus:border-white/30"
+    }`;
+
+  return (
+    <section className="py-32 bg-[#050505]" id="contact">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <ScrollReveal>
+          <div className="mb-20">
+            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight text-white leading-[1.1]">
+              <span className="block">LET&apos;S BUILD</span>
+              <span className="block text-white/30">SOMETHING.</span>
+            </h2>
+            <p className="mt-4 text-white/30 text-sm max-w-md">
+              Have a business that needs a website? Let&apos;s talk.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div className="grid lg:grid-cols-12 gap-16 lg:gap-24">
+          {/* Left — Contact Info */}
+          <ScrollReveal className="lg:col-span-4">
+            <div className="space-y-10">
+              <div className="space-y-6">
+                <div>
+                  <p className="text-[10px] font-medium tracking-[0.2em] text-white/20 uppercase mb-2">
+                    Phone / WhatsApp
+                  </p>
+                  {contact.phone.map((num) => (
+                    <p key={num} className="text-sm text-white/60">{num}</p>
+                  ))}
+                </div>
+                <div>
+                  <p className="text-[10px] font-medium tracking-[0.2em] text-white/20 uppercase mb-2">
+                    Email
+                  </p>
+                  <a href={`mailto:${contact.email}`} className="text-sm text-white/60 hover:text-white transition-colors">
+                    {contact.email}
+                  </a>
+                </div>
+                <div>
+                  <p className="text-[10px] font-medium tracking-[0.2em] text-white/20 uppercase mb-2">
+                    Location
+                  </p>
+                  <p className="text-sm text-white/60">{contact.location}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-medium tracking-[0.2em] text-white/20 uppercase mb-2">
+                    Business Hours
+                  </p>
+                  <p className="text-sm text-white/60">{contact.businessHours}</p>
+                </div>
+              </div>
+
+              {/* Social */}
+              <div>
+                <p className="text-[10px] font-medium tracking-[0.2em] text-white/20 uppercase mb-3">
+                  Social
+                </p>
+                <div className="flex gap-4">
+                  {siteConfig.social.instagram && (
+                    <a href={siteConfig.social.instagram} target="_blank" rel="noopener noreferrer" className="text-xs text-white/30 hover:text-white transition-colors">
+                      Instagram
+                    </a>
+                  )}
+                  {siteConfig.social.linkedin && (
+                    <a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-xs text-white/30 hover:text-white transition-colors">
+                      LinkedIn
+                    </a>
+                  )}
+                  {siteConfig.social.facebook && (
+                    <a href={siteConfig.social.facebook} target="_blank" rel="noopener noreferrer" className="text-xs text-white/30 hover:text-white transition-colors">
+                      Facebook
+                    </a>
+                  )}
+                  {!siteConfig.social.instagram && !siteConfig.social.linkedin && !siteConfig.social.facebook && (
+                    <span className="text-xs text-white/15">Coming soon</span>
+                  )}
+                </div>
+              </div>
+
+              {/* WhatsApp CTA */}
+              {whatsappUrl !== "#" && (
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 text-[13px] font-medium text-white/40 hover:text-white transition-colors"
+                >
+                  CHAT ON WHATSAPP
+                  <ArrowUpRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
+              )}
+            </div>
+          </ScrollReveal>
+
+          {/* Right — Form */}
+          <ScrollReveal className="lg:col-span-8">
+            {status === "success" ? (
+              <div className="border border-white/[0.06] rounded-2xl p-12 text-center">
+                <CheckCircle2 className="h-8 w-8 text-white/30 mx-auto mb-6" />
+                <h3 className="text-xl font-semibold text-white mb-3">
+                  Thank You.
+                </h3>
+                <p className="text-sm text-white/30 mb-8">
+                  Your enquiry has been received. We&apos;ll get back to you soon.
+                </p>
+                <button
+                  onClick={() => setStatus("idle")}
+                  className="text-xs font-medium text-white/30 hover:text-white transition-colors tracking-wide"
+                >
+                  SEND ANOTHER ENQUIRY
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} noValidate className="space-y-1">
+                <div className="grid sm:grid-cols-2 gap-x-8">
+                  <div>
+                    <label className="block text-[10px] font-medium tracking-[0.15em] text-white/20 uppercase mt-6 mb-1">
+                      Name <span className="text-white/10">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => handleChange("name", e.target.value)}
+                      placeholder="Your name"
+                      className={inputClass(errors.name)}
+                    />
+                    {errors.name && <p className="mt-1 text-[11px] text-red-400/70">{errors.name}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-medium tracking-[0.15em] text-white/20 uppercase mt-6 mb-1">
+                      Business Name
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.businessName}
+                      onChange={(e) => handleChange("businessName", e.target.value)}
+                      placeholder="Your business name"
+                      className={inputClass()}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-x-8">
+                  <div>
+                    <label className="block text-[10px] font-medium tracking-[0.15em] text-white/20 uppercase mt-6 mb-1">
+                      Email <span className="text-white/10">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => handleChange("email", e.target.value)}
+                      placeholder="you@email.com"
+                      className={inputClass(errors.email)}
+                    />
+                    {errors.email && <p className="mt-1 text-[11px] text-red-400/70">{errors.email}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-medium tracking-[0.15em] text-white/20 uppercase mt-6 mb-1">
+                      Phone / WhatsApp
+                    </label>
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => handleChange("phone", e.target.value)}
+                      placeholder="Your phone number"
+                      className={inputClass()}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-x-8">
+                  <div>
+                    <label className="block text-[10px] font-medium tracking-[0.15em] text-white/20 uppercase mt-6 mb-1">
+                      Business Type <span className="text-white/10">*</span>
+                    </label>
+                    <select
+                      value={formData.businessType}
+                      onChange={(e) => handleChange("businessType", e.target.value)}
+                      className={selectClass(errors.businessType)}
+                    >
+                      <option value="" className="bg-[#111]">Select business type</option>
+                      {businessTypeOptions.map((opt) => (
+                        <option key={opt} value={opt} className="bg-[#111]">{opt}</option>
+                      ))}
+                    </select>
+                    {errors.businessType && <p className="mt-1 text-[11px] text-red-400/70">{errors.businessType}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-medium tracking-[0.15em] text-white/20 uppercase mt-6 mb-1">
+                      Project Type <span className="text-white/10">*</span>
+                    </label>
+                    <select
+                      value={formData.service}
+                      onChange={(e) => handleChange("service", e.target.value)}
+                      className={selectClass(errors.service)}
+                    >
+                      <option value="" className="bg-[#111]">Select project type</option>
+                      {serviceOptions.map((opt) => (
+                        <option key={opt} value={opt} className="bg-[#111]">{opt}</option>
+                      ))}
+                    </select>
+                    {errors.service && <p className="mt-1 text-[11px] text-red-400/70">{errors.service}</p>}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-medium tracking-[0.15em] text-white/20 uppercase mt-6 mb-1">
+                    Message
+                  </label>
+                  <textarea
+                    value={formData.message}
+                    onChange={(e) => handleChange("message", e.target.value)}
+                    placeholder="Tell us about your project..."
+                    rows={4}
+                    className={`${inputClass()} resize-none`}
+                  />
+                </div>
+
+                {status === "error" && (
+                  <div className="flex items-center gap-2 text-sm text-red-400/70 pt-2">
+                    <AlertCircle className="h-4 w-4" />
+                    Something went wrong. Please try again.
+                  </div>
+                )}
+
+                <div className="pt-8">
+                  <button
+                    type="submit"
+                    className="group inline-flex items-center gap-2 px-8 py-4 text-[13px] font-medium text-black bg-white rounded-full hover:bg-white/90 transition-all"
+                  >
+                    SEND ENQUIRY
+                    <ArrowUpRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </button>
+                </div>
+              </form>
+            )}
+          </ScrollReveal>
+        </div>
+      </div>
+    </section>
+  );
+}
