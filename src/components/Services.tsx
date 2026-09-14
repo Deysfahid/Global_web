@@ -1,18 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
-
-const services = [
-  { number: "01", title: "BUSINESS WEBSITES", description: "Professional websites designed around your business and customers." },
-  { number: "02", title: "E-COMMERCE", description: "Online stores that make it easy for customers to browse and purchase." },
-  { number: "03", title: "MEDICAL WEBSITES", description: "Modern websites for clinics, doctors, dentists and healthcare businesses." },
-  { number: "04", title: "RESTAURANT WEBSITES", description: "Beautiful menus, contact information, location and online ordering." },
-  { number: "05", title: "LANDING PAGES", description: "High-converting landing pages for campaigns and businesses." },
-  { number: "06", title: "CUSTOM WEB APPLICATIONS", description: "Custom web solutions built around specific business requirements." },
-  { number: "07", title: "WEBSITE REDESIGN", description: "Transform outdated websites into modern digital experiences." },
-];
+import { services } from "@/data/services-data";
 
 export default function Services() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -31,8 +23,9 @@ export default function Services() {
         <div className="border-t border-white/[0.06]">
           {services.map((service, i) => (
             <ScrollReveal key={service.number}>
-              <div
-                className="group border-b border-white/[0.06] py-6 sm:py-8 cursor-pointer transition-all duration-300"
+              <Link
+                href={`/services/${service.slug}`}
+                className="group block border-b border-white/[0.06] py-6 sm:py-8 transition-all duration-300 hover:bg-white/[0.02]"
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
@@ -50,7 +43,7 @@ export default function Services() {
                   <ArrowUpRight
                     className={`h-4 w-4 transition-all duration-300 ${
                       hoveredIndex === i
-                        ? "text-white/60 translate-x-0.5 -translate-y-0.5"
+                        ? "text-white/60 translate-x-1 -translate-y-1"
                         : "text-white/10"
                     }`}
                   />
@@ -64,7 +57,7 @@ export default function Services() {
                     {service.description}
                   </p>
                 </div>
-              </div>
+              </Link>
             </ScrollReveal>
           ))}
         </div>

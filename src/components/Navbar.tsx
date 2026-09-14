@@ -53,7 +53,7 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               className={`px-5 py-2 text-[13px] font-medium rounded-full transition-all duration-300 ${
-                pathname === link.href
+                pathname === link.href || pathname.startsWith(link.href + "/")
                   ? "bg-white/10 text-white"
                   : "text-white/50 hover:text-white/80"
               }`}
@@ -98,7 +98,7 @@ export default function Navbar() {
             key={link.href}
             href={link.href}
             className={`text-3xl font-light tracking-wide transition-colors ${
-              pathname === link.href ? "text-white" : "text-white/40 hover:text-white/70"
+              pathname === link.href || pathname.startsWith(link.href + "/") ? "text-white" : "text-white/40 hover:text-white/70"
             }`}
           >
             {link.label}
