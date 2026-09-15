@@ -14,7 +14,6 @@ export default function HomePage() {
       <CTA
         heading="Want a website like this for your business?"
         buttonText="Start a Project"
-        variant="dark"
       />
       <Services />
       <About />

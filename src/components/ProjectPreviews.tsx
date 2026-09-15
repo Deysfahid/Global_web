@@ -61,42 +61,39 @@ function MedcarePreview() {
   );
 }
 
-function UrbanBrewPreview() {
+function SkylineRealtyPreview() {
   return (
-    <div className="w-full h-full bg-[#1a1612] text-white p-4 flex flex-col overflow-hidden">
+    <div className="w-full h-full bg-white text-gray-900 p-4 flex flex-col overflow-hidden">
       <div className="flex items-center justify-between mb-3">
-        <span className="text-[11px] font-serif tracking-[0.15em] text-amber-200">URBAN BREW</span>
+        <span className="text-[11px] font-semibold tracking-wide text-indigo-700">SKYLINE REALTY</span>
         <div className="flex gap-3">
-          <span className="text-[9px] text-amber-200/40">Menu</span>
-          <span className="text-[9px] text-amber-200/40">Locations</span>
-          <span className="text-[9px] text-amber-200/40">Order</span>
+          <span className="text-[9px] text-gray-400">Listings</span>
+          <span className="text-[9px] text-gray-400">Agents</span>
+          <span className="text-[9px] text-gray-400">Contact</span>
         </div>
       </div>
-      <div className="flex-1 bg-gradient-to-br from-amber-900/40 to-orange-900/30 rounded-lg p-3 flex flex-col justify-center relative overflow-hidden">
-        <div className="absolute top-2 right-2 w-16 h-16 rounded-full bg-amber-700/30 blur-md" />
-        <p className="text-[9px] text-amber-400/70 font-medium tracking-widest mb-1">ARTISAN COFFEE</p>
-        <p className="text-[14px] font-serif leading-tight mb-1.5">Crafted for<br/>Your Everyday</p>
-        <p className="text-[8px] text-amber-100/30 mb-2">Single-origin beans, roasted fresh daily.</p>
+      <div className="bg-gradient-to-br from-slate-100 to-indigo-50 rounded-lg p-3 mb-2 flex-1 flex flex-col justify-center relative overflow-hidden">
+        <div className="absolute top-1 right-1 w-14 h-14 rounded-lg bg-indigo-100 flex items-center justify-center text-[20px]">🏢</div>
+        <p className="text-[9px] text-indigo-500 font-semibold tracking-widest mb-1">FEATURED</p>
+        <p className="text-[14px] font-bold leading-tight mb-1">Find Your<br/>Dream Home</p>
+        <p className="text-[8px] text-gray-400 mb-2">Premium properties across prime locations.</p>
         <div className="flex gap-2">
-          <div className="h-5 px-3 bg-amber-600 rounded-full text-[8px] text-white flex items-center justify-center font-medium">View Menu</div>
-          <div className="h-5 px-3 bg-amber-200/10 rounded-full text-[8px] text-amber-200/60 flex items-center justify-center">Order Now</div>
+          <div className="h-5 px-3 bg-indigo-600 rounded-full text-[8px] text-white flex items-center justify-center font-semibold">Browse Listings</div>
+          <div className="h-5 px-3 bg-indigo-50 border border-indigo-200 rounded-full text-[8px] text-indigo-600 flex items-center justify-center">Virtual Tour</div>
         </div>
       </div>
-      <div className="flex gap-1.5 mt-2">
-        <div className="flex-1 bg-amber-900/30 rounded-md p-1.5">
-          <div className="w-full h-8 bg-amber-800/40 rounded mb-1" />
-          <p className="text-[8px] text-amber-200/70 font-medium">Espresso</p>
-          <p className="text-[7px] text-amber-200/30">₹180</p>
+      <div className="flex gap-1.5 mt-1">
+        <div className="flex-1 bg-slate-50 rounded-md p-1.5 text-center">
+          <p className="text-[11px] font-bold text-indigo-600">3 BHK</p>
+          <p className="text-[7px] text-gray-400">₹85L</p>
         </div>
-        <div className="flex-1 bg-amber-900/30 rounded-md p-1.5">
-          <div className="w-full h-8 bg-orange-800/40 rounded mb-1" />
-          <p className="text-[8px] text-amber-200/70 font-medium">Cold Brew</p>
-          <p className="text-[7px] text-amber-200/30">₹220</p>
+        <div className="flex-1 bg-slate-50 rounded-md p-1.5 text-center">
+          <p className="text-[11px] font-bold text-slate-600">2 BHK</p>
+          <p className="text-[7px] text-gray-400">₹52L</p>
         </div>
-        <div className="flex-1 bg-amber-900/30 rounded-md p-1.5">
-          <div className="w-full h-8 bg-yellow-800/40 rounded mb-1" />
-          <p className="text-[8px] text-amber-200/70 font-medium">Latte</p>
-          <p className="text-[7px] text-amber-200/30">₹200</p>
+        <div className="flex-1 bg-slate-50 rounded-md p-1.5 text-center">
+          <p className="text-[11px] font-bold text-slate-600">Villa</p>
+          <p className="text-[7px] text-gray-400">₹1.2Cr</p>
         </div>
       </div>
     </div>
@@ -302,7 +299,7 @@ function CitylifePreview() {
 
 const previewMap: Record<string, () => ReactNode> = {
   medcare: () => <MedcarePreview />,
-  "urban-brew": () => <UrbanBrewPreview />,
+  "skyline-realty": () => <SkylineRealtyPreview />,
   freshmart: () => <FreshmartPreview />,
   prime: () => <PrimePreview />,
   fitzone: () => <FitzonePreview />,

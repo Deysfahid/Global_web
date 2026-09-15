@@ -17,35 +17,34 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "GLOBAL — We Build Websites For Business",
+    default: "GLOBAL — Build. Grow. Scale.",
     template: "%s | GLOBAL",
   },
   description:
-    "GLOBAL is a web development studio that builds modern, professional websites for businesses, clinics, shops and organizations.",
+    "GLOBAL is a digital business agency — websites, e-commerce, marketing, SEO, tax & GST, accounting and business services.",
   keywords: [
     "website development",
-    "business website development",
-    "web design studio",
-    "small business websites",
-    "medical website development",
-    "restaurant website development",
-    "e-commerce website development",
-    "website redesign",
-    "web development studio India",
+    "digital marketing",
+    "SEO services",
+    "e-commerce development",
+    "business registration India",
+    "GST filing",
+    "social media marketing",
+    "web design agency",
   ],
   openGraph: {
     type: "website",
     locale: "en_US",
     siteName: "GLOBAL",
-    title: "GLOBAL — We Build Websites For Business",
+    title: "GLOBAL — Build. Grow. Scale.",
     description:
-      "GLOBAL is a web development studio that builds modern, professional websites for businesses.",
+      "Everything your business needs to build a stronger digital presence and grow with confidence.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GLOBAL — We Build Websites For Business",
+    title: "GLOBAL — Build. Grow. Scale.",
     description:
-      "Modern website development for businesses of all sizes.",
+      "Websites, marketing, tax and business services — all under one roof.",
   },
   robots: {
     index: true,
@@ -59,7 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#050505] text-white">
+      <body className="min-h-full flex flex-col bg-[#0a0a0a] text-white">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

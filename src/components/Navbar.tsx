@@ -31,6 +31,9 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(href + "/");
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -43,18 +46,18 @@ export default function Navbar() {
           href="/"
           className="text-sm font-bold tracking-[0.2em] text-white uppercase hover:opacity-70 transition-opacity"
         >
-          GLOBAL<sup className="text-[8px] ml-0.5 align-super opacity-50">®</sup>
+          GLOBAL<sup className="text-[8px] ml-0.5 align-super text-yellow-400/60">®</sup>
         </Link>
 
-        {/* Desktop nav — centered pill */}
-        <div className="hidden lg:flex items-center gap-1 px-1 py-1 rounded-full bg-white/[0.06] backdrop-blur-xl border border-white/[0.08]">
+        {/* Desktop nav — glass pill */}
+        <div className="hidden lg:flex items-center gap-1 px-1.5 py-1.5 rounded-full bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] shadow-lg shadow-yellow-500/[0.03]">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={`px-5 py-2 text-[13px] font-medium rounded-full transition-all duration-300 ${
-                pathname === link.href || pathname.startsWith(link.href + "/")
-                  ? "bg-white/10 text-white"
+                isActive(link.href)
+                  ? "bg-yellow-500/15 text-white shadow-sm shadow-yellow-500/10"
                   : "text-white/50 hover:text-white/80"
               }`}
             >
@@ -67,7 +70,11 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-4">
           <Link
             href="/contact"
-            className="px-5 py-2 text-[13px] font-medium text-white/50 hover:text-white transition-colors"
+            className={`px-5 py-2 text-[13px] font-medium rounded-full transition-all duration-300 ${
+              isActive("/contact")
+                ? "bg-yellow-500/15 text-white"
+                : "text-white/50 hover:text-white/80"
+            }`}
           >
             Contact
           </Link>
@@ -86,7 +93,7 @@ export default function Navbar() {
 
       {/* Mobile fullscreen menu */}
       <div
-        className={`lg:hidden fixed inset-0 bg-[#050505]/98 backdrop-blur-xl transition-all duration-500 flex flex-col items-center justify-center gap-8 ${
+        className={`lg:hidden fixed inset-0 bg-[#0a0a0a]/98 backdrop-blur-2xl transition-all duration-500 flex flex-col items-center justify-center gap-8 ${
           mobileOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
@@ -98,7 +105,7 @@ export default function Navbar() {
             key={link.href}
             href={link.href}
             className={`text-3xl font-light tracking-wide transition-colors ${
-              pathname === link.href || pathname.startsWith(link.href + "/") ? "text-white" : "text-white/40 hover:text-white/70"
+              isActive(link.href) ? "text-yellow-400" : "text-white/40 hover:text-white/70"
             }`}
           >
             {link.label}

@@ -5,22 +5,22 @@ export default function Footer() {
   const { contact } = siteConfig;
 
   return (
-    <footer className="border-t border-white/[0.06] bg-[#050505]">
+    <footer className="border-t border-white/[0.06] bg-[#0a0a0a]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="text-sm font-bold tracking-[0.2em] text-white">
-              GLOBAL<sup className="text-[7px] ml-0.5 align-super opacity-40">®</sup>
+              GLOBAL<sup className="text-[7px] ml-0.5 align-super text-yellow-400/50">®</sup>
             </Link>
-            <p className="mt-4 text-xs text-white/20 leading-relaxed max-w-[200px]">
-              WE BUILD WEBSITES<br />FOR BUSINESS.
+            <p className="mt-4 text-xs text-white/50 leading-relaxed max-w-[200px]">
+              BUILD. GROW. SCALE.
             </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <p className="text-[10px] font-medium tracking-[0.2em] text-white/20 uppercase mb-5">
+            <p className="text-[10px] font-medium tracking-[0.2em] text-yellow-400/60 uppercase mb-5">
               Navigation
             </p>
             <ul className="space-y-3">
@@ -33,7 +33,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-xs text-white/30 hover:text-white transition-colors"
+                    className="text-xs text-white/60 hover:text-yellow-300 transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -44,14 +44,20 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <p className="text-[10px] font-medium tracking-[0.2em] text-white/20 uppercase mb-5">
+            <p className="text-[10px] font-medium tracking-[0.2em] text-yellow-400/60 uppercase mb-5">
               Services
             </p>
             <ul className="space-y-3">
-              {["Business Websites", "E-commerce", "Medical Websites", "Restaurant Websites", "Website Redesign"].map((s) => (
-                <li key={s}>
-                  <Link href="/services" className="text-xs text-white/30 hover:text-white transition-colors">
-                    {s}
+              {[
+                { label: "Website Development", slug: "website-development" },
+                { label: "E-commerce", slug: "ecommerce" },
+                { label: "Digital Marketing", slug: "digital-marketing" },
+                { label: "SEO", slug: "seo" },
+                { label: "Tax & GST", slug: "tax-gst" },
+              ].map((s) => (
+                <li key={s.slug}>
+                  <Link href={`/services/${s.slug}`} className="text-xs text-white/60 hover:text-yellow-300 transition-colors">
+                    {s.label}
                   </Link>
                 </li>
               ))}
@@ -60,19 +66,19 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <p className="text-[10px] font-medium tracking-[0.2em] text-white/20 uppercase mb-5">
+            <p className="text-[10px] font-medium tracking-[0.2em] text-yellow-400/60 uppercase mb-5">
               Contact
             </p>
             <ul className="space-y-3">
               {contact.phone.map((num) => (
-                <li key={num} className="text-xs text-white/30">{num}</li>
+                <li key={num} className="text-xs text-white/60">{num}</li>
               ))}
               <li>
-                <a href={`mailto:${contact.email}`} className="text-xs text-white/30 hover:text-white transition-colors">
+                <a href={`mailto:${contact.email}`} className="text-xs text-white/60 hover:text-yellow-300 transition-colors">
                   {contact.email}
                 </a>
               </li>
-              <li className="text-xs text-white/30">{contact.location}</li>
+              <li className="text-xs text-white/60">{contact.location}</li>
             </ul>
           </div>
         </div>
@@ -81,11 +87,11 @@ export default function Footer() {
       {/* Bottom */}
       <div className="border-t border-white/[0.04]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[10px] text-white/15">
+          <p className="text-[10px] text-white/40">
             © {new Date().getFullYear()} GLOBAL. All rights reserved.
           </p>
-          <p className="text-[10px] text-white/10">
-            Websites That Help Businesses Grow.
+          <p className="text-[10px] text-yellow-400/40">
+            Build. Grow. Scale.
           </p>
         </div>
       </div>

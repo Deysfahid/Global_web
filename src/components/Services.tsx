@@ -1,65 +1,61 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import ScrollReveal from "./ScrollReveal";
+import { ArrowUpRight, Globe, ShoppingBag, Megaphone, Search, Share2, Receipt, Calculator, Building2 } from "lucide-react";
 import { services } from "@/data/services-data";
+import ScrollReveal from "./ScrollReveal";
+import type { LucideIcon } from "lucide-react";
+
+const iconMap: Record<string, LucideIcon> = {
+  Globe, ShoppingBag, Megaphone, Search, Share2, Receipt, Calculator, Building2,
+};
 
 export default function Services() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
   return (
-    <section className="py-32 bg-[#050505]" id="services">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="py-32 bg-[#0a0a0a] relative" id="services">
+      <div className="absolute top-1/4 left-0 w-[400px] h-[400px] rounded-full bg-yellow-500/[0.03] blur-[130px] pointer-events-none" />
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
         <ScrollReveal>
-          <div className="mb-20">
+          <div className="mb-16">
+            <span className="text-[11px] font-medium text-yellow-400/60 tracking-[0.2em] uppercase mb-4 block">What we do</span>
             <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight text-white leading-[1.1]">
-              WHAT WE BUILD.
+              OUR SERVICES.
             </h2>
           </div>
         </ScrollReveal>
 
-        <div className="border-t border-white/[0.06]">
-          {services.map((service, i) => (
-            <ScrollReveal key={service.number}>
-              <Link
-                href={`/services/${service.slug}`}
-                className="group block border-b border-white/[0.06] py-6 sm:py-8 transition-all duration-300 hover:bg-white/[0.02]"
-                onMouseEnter={() => setHoveredIndex(i)}
-                onMouseLeave={() => setHoveredIndex(null)}
-              >
-                <div className="flex items-center gap-6 sm:gap-10">
-                  <span className="text-xs font-mono text-white/20 w-6">
-                    {service.number}
-                  </span>
-                  <h3
-                    className={`text-lg sm:text-xl lg:text-2xl font-semibold tracking-tight transition-colors duration-300 flex-1 ${
-                      hoveredIndex === i ? "text-white" : "text-white/40"
-                    }`}
-                  >
-                    {service.title}
-                  </h3>
-                  <ArrowUpRight
-                    className={`h-4 w-4 transition-all duration-300 ${
-                      hoveredIndex === i
-                        ? "text-white/60 translate-x-1 -translate-y-1"
-                        : "text-white/10"
-                    }`}
-                  />
-                </div>
-                <div
-                  className={`overflow-hidden transition-all duration-500 ${
-                    hoveredIndex === i ? "max-h-16 mt-3 opacity-100" : "max-h-0 opacity-0"
-                  }`}
-                >
-                  <p className="text-sm text-white/30 pl-12 sm:pl-16 max-w-lg">
-                    {service.description}
-                  </p>
-                </div>
-              </Link>
-            </ScrollReveal>
-          ))}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {services.map((service, i) => {
+            const Icon = iconMap[service.icon] || Globe;
+            return (
+              <ScrollReveal key={service.slug} delay={i}>
+                <Link href={`/services/${service.slug}`} className="group block h-full">
+                  <div className="h-full rounded-2xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] p-6 hover:bg-white/[0.06] hover:border-yellow-500/15 hover:shadow-lg hover:shadow-yellow-500/[0.05] transition-all duration-500 relative overflow-hidden">
+                    <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-yellow-500/0 group-hover:bg-yellow-500/10 blur-[40px] transition-all duration-700" />
+
+                    <span className="text-[10px] font-mono text-white/15 mb-4 block relative">{service.number}</span>
+
+                    <div className="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/10 flex items-center justify-center mb-5 group-hover:bg-yellow-500/20 group-hover:border-yellow-500/20 transition-all relative">
+                      <Icon className="h-4.5 w-4.5 text-yellow-400/60 group-hover:text-yellow-300 transition-colors" />
+                    </div>
+
+                    <h3 className="text-sm font-semibold text-white/80 tracking-tight mb-2 group-hover:text-white transition-colors relative">
+                      {service.title}
+                    </h3>
+                    <p className="text-[12px] text-white/25 leading-relaxed mb-4 group-hover:text-white/35 transition-colors relative">
+                      {service.description}
+                    </p>
+
+                    <span className="inline-flex items-center gap-1 text-[11px] font-medium text-white/20 group-hover:text-yellow-400/60 transition-colors relative">
+                      EXPLORE
+                      <ArrowUpRight className="h-3 w-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </span>
+                  </div>
+                </Link>
+              </ScrollReveal>
+            );
+          })}
         </div>
       </div>
     </section>
